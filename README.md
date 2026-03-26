@@ -1,5 +1,8 @@
 # Script de Renombrado Automático de Archivos de Música
 
+
+ **Siempre tener un backup por si acaso ;-)**
+ 
 Este script utiliza inteligencia artificial (Gemini) para renombrar archivos de música automáticamente, corrigiendo nombres mal formateados y aplicando un estándar consistente.
 
 ## ¿Qué hace?
