@@ -65,7 +65,7 @@ El script necesita acceso a la API de Google Gemini para funcionar:
 4. Abre `renombrar.py` en el editor
 5. Encuentra esta línea (línea 9):
    ```python
-   API_KEY = 'AIzaSyBRaDQW8wcZJSdTxk3A6RbbyotJpOYNoP4'
+   API_KEY = '[API de GEMINI]'
    ```
 6. Reemplaza la clave con la tuya
 
