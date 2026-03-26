@@ -65,9 +65,11 @@ El script necesita acceso a la API de Google Gemini para funcionar:
 4. Abre `renombrar.py` en el editor
 5. Encuentra esta línea (línea 9):
    ```python
-   API_KEY = '[API de GEMINI]'
+   API_KEY = 'TU_API_KEY_AQUI'
    ```
-6. Reemplaza la clave con la tuya
+6. Reemplaza `TU_API_KEY_AQUI` con tu clave real de Google Gemini
+
+**⚠️ IMPORTANTE:** Nunca compartas tu API Key. Si la publicas accidentalmente en GitHub, debes revocarla inmediatamente en [Google Cloud Console](https://console.cloud.google.com/)
 
 ---
 
@@ -87,7 +89,31 @@ El script:
 - Recorre toda la carpeta `Temas/` recursivamente
 - Analiza cada archivo de música (MP3, WAV, FLAC, M4A, OGG, AAC)
 - Lo renombra automáticamente
-- Muestra el progreso en terminal
+- **Muestra el progreso en tiempo real:** `[45/150] (30.0%) Procesando: archivo.mp3`
+- **Guarda checkpoints automáticamente** para poder pausar y reanudar sin perder progreso
+
+### Pausar y reanudar el script
+
+Si necesitas pausar el script en cualquier momento:
+
+1. Presiona `Ctrl+C` en la terminal
+2. El progreso se guarda automáticamente en `checkpoint.json`
+3. La próxima vez que ejecutes `python renombrar.py`, **continuará desde donde se paró**
+4. Al terminar completamente, el archivo `checkpoint.json` se borra automáticamente
+
+**Ejemplo:**
+```
+[15/150] (10.0%) Procesando: track_15.mp3
+    [OK] -> Artist Name - Song Title.mp3
+^C  (presionaste Ctrl+C)
+
+# Más tarde, ejecutas de nuevo:
+python renombrar.py
+Archivos ya procesados: 15
+Total de archivos a procesar: 150
+
+[16/150] (10.7%) Procesando: track_16.mp3
+```
 
 ### Opción 2: Renombrar una carpeta específica
 
@@ -138,9 +164,36 @@ ruta/a/tu/carpeta/
 ├── README.md (este archivo)
 ├── renombrar.py (el script)
 ├── .venv/ (entorno virtual, se crea al instalar)
+├── checkpoint.json (se crea automáticamente si pausas el script)
 ├── Temas/ (carpeta de música a renombrar)
 └── ...
 ```
+
+---
+
+## Entender el progreso
+
+Durante la ejecución verás mensajes como:
+
+```
+--- Iniciando Sistema de Doble Verificación ---
+Archivos ya procesados: 0
+Total de archivos a procesar: 150
+
+  [1/150] (0.7%) Procesando: track_001.mp3
+    [OK] -> Artist Name - Song Title.mp3
+  [2/150] (1.3%) Procesando: track_002.mp3
+    [=] Ya está correcto.
+  [3/150] (2.0%) Procesando: track_003.mp3
+    [OK] -> Another Artist - Another Song.mp3
+```
+
+**Significado:**
+- `[3/150]` = Has procesado 3 de 150 archivos
+- `(2.0%)` = Porcentaje de progreso
+- `[OK]` = Archivo renombrado exitosamente
+- `[=]` = El archivo ya tenía el nombre correcto
+- `[REVISAR]` = No se pudo determinar el nombre (requiere revisión manual)
 
 ---
 
